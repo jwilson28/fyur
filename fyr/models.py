@@ -9,6 +9,9 @@ class Band(models.Model):
     formation_date = models.DateTimeField('Band formation')
     #founder = models.ForeignKey(Artist, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.name
+
 # class BandMembers(models.Model):
 #     band = models.ForeignKey(Band, on_delete=models.CASCADE)
 #     artist = models.ForeignKey(Artist, on_delete=models.CASCADE)
@@ -31,10 +34,16 @@ class Address(models.Model):
     postal_code = models.CharField(max_length=50)
     country = models.CharField(max_length=100)
 
+    def __str__(self):
+        return f"{self.house_apt_unit_no}, {self.street_no}, {self.street}, {self.city}"
+
 class Venue(models.Model):
     name = models.CharField(max_length=100)
     address = models.ForeignKey(Address, on_delete=models.CASCADE)
     description = models.TextField()
+
+    def __str__(self):
+        return self.name
 
 class Events(models.Model):
     name = models.CharField(max_length=100)
@@ -42,6 +51,9 @@ class Events(models.Model):
     duration_description = models.CharField(max_length=100, null=True)
     venues = models.ManyToManyField('Venue')
     bands = models.ManyToManyField('Band')
+
+    def __str__(self):
+        return self.name
 
 
 
