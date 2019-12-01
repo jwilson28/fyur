@@ -16,6 +16,13 @@ pw=secret11
 
 """
 
+
+
+#TODO
+# 1. Add another model form for venues
+# 2. Add datepicker to forms
+
+
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)

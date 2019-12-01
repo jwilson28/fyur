@@ -6,7 +6,7 @@ class Band(models.Model):
     name = models.CharField(max_length=100)
     city = models.CharField(max_length=80)
     description = models.TextField()
-    formation_date = models.DateTimeField('Band formation')
+    formation_date = models.DateField('Band formation')
     #founder = models.ForeignKey(Artist, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -47,7 +47,7 @@ class Venue(models.Model):
 
 class Events(models.Model):
     name = models.CharField(max_length=100)
-    event_start = models.DateTimeField('Event Date')
+    event_start = models.DateField('Event Date')
     duration_description = models.CharField(max_length=100, null=True)
     venue = models.ForeignKey('Venue', on_delete=models.CASCADE, null=True, blank=True)
     bands = models.ManyToManyField('Band')

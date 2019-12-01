@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from .models import Events, Address, Band, Venue
-from .forms import EventForm, AddressForm
+from .forms import EventForm, AddressForm, BandForm
 
 
 def index(request):
@@ -28,7 +28,6 @@ def event_detail(request, event_id):
 
 def address_list(request):
     addresses = Address.objects.order_by('country')
-    print(len(addresses), " is the num of addresses...")
     return render(request, 'fyr/address_list.html', {'addresses':addresses})
 
 
@@ -43,3 +42,19 @@ def add_address(request):
     else:
         form = AddressForm()
         return render(request, 'fyr/add_address.html', {'form':form})
+
+def band_list(request):
+    bands = Band.objects.order_by('name')
+    return render(request, 'fyr/band_list.html', {'bands':bands})
+
+def add_band(request):
+    if request.method == 'POST':
+        band_form = BandForm(request.POST)
+        if band_form.is_valid():
+            new_band = band_form.save()
+            return HttpResponseRedirect(reverse('fyr:band_list'))
+        else:
+            return render(request, 'fyr/add_band.html', {'band_form': band_form})
+    else:
+        band_form = BandForm()
+        return render(request, 'fyr/add_band.html', {'band_form':band_form})

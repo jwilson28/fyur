@@ -17,3 +17,9 @@ class AddressForm(forms.ModelForm):
         model = Address
         fields = ['house_apt_unit_no','descriptor', 'street', 'street_no',
                   'city', 'state_prov', 'postal_code', 'country']
+
+
+class BandForm(forms.ModelForm):
+    class Meta:
+        model = Band
+        fields = '__all__'
