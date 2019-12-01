@@ -35,7 +35,7 @@ class Address(models.Model):
     country = models.CharField(max_length=100)
 
     def __str__(self):
-        return f"{self.house_apt_unit_no}, {self.street_no}, {self.street}, {self.city}"
+        return f"{self.street_no} {self.street}, {self.city}"
 
 class Venue(models.Model):
     name = models.CharField(max_length=100)
@@ -49,7 +49,7 @@ class Events(models.Model):
     name = models.CharField(max_length=100)
     event_start = models.DateTimeField('Event Date')
     duration_description = models.CharField(max_length=100, null=True)
-    venues = models.ManyToManyField('Venue')
+    venue = models.ForeignKey('Venue', on_delete=models.CASCADE, null=True, blank=True)
     bands = models.ManyToManyField('Band')
 
     def __str__(self):
