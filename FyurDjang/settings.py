@@ -8,7 +8,20 @@ https://docs.djangoproject.com/en/2.2/topics/settings/
 
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
+
+superuser details:
+name= jpwilson
+email=jp@email.com
+pw=secret11
+
 """
+
+
+
+#TODO
+# 1. Add another model form for venues
+# 2. Add datepicker to forms
+
 
 import os
 
@@ -107,7 +120,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Chicago'
 
 USE_I18N = True
 
@@ -120,3 +133,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+PROJECT_PATH = os.path.abspath(os.path.dirname(__name__))
+STATICFILES_DIRS = [
+    os.path.join(PROJECT_PATH, 'static')
+]
