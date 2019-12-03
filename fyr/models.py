@@ -34,6 +34,9 @@ class Address(models.Model):
     postal_code = models.CharField(max_length=50)
     country = models.CharField(max_length=100)
 
+    class Meta:
+        verbose_name_plural = 'Addresses'
+
     def __str__(self):
         return f"{self.street_no} {self.street}, {self.city}"
 
@@ -45,9 +48,9 @@ class Venue(models.Model):
     def __str__(self):
         return self.name
 
-class Events(models.Model):
+class Event(models.Model):
     name = models.CharField(max_length=100)
-    event_start = models.DateField('Event Date')
+    event_start = models.DateField('Event Date', null=True)
     duration_description = models.CharField(max_length=100, null=True)
     venue = models.ForeignKey('Venue', on_delete=models.CASCADE, null=True, blank=True)
     bands = models.ManyToManyField('Band')
@@ -55,5 +58,11 @@ class Events(models.Model):
     def __str__(self):
         return self.name
 
-
-
+    def label_country_nicknames(self):
+        self.annotate_country = Event.objects.annotate(country_code=Case(
+            When(venue__address__country__in=["South Africa", "SA", "United States"],
+                 then=Value("Saffer")),
+            When(Q(venue__address__country="United States") | Q(venue__address__country="Canada"),
+                 then= Value("Northerica")),
+            default=Value("REST of WORLD"),
+            output_field=CharField(),))

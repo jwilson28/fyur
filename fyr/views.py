@@ -1,30 +1,35 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
-from .models import Events, Address, Band, Venue
-from .forms import EventForm, AddressForm, BandForm
+from .models import Event, Address, Band, Venue
+from .forms import EventForm, AddressForm, BandForm, VenueForm
 
 
 def index(request):
-    events = Events.objects.order_by('-event_start')
+    events = Event.objects.order_by('-event_start')
     context = {
         'events':events
     }
     return render(request, 'fyr/index.html', context)
 
 def event_detail(request, event_id):
-    event = get_object_or_404(Events, pk=event_id)
+    event = get_object_or_404(Event, pk=event_id)
     context = {
         'event': event
     }
     return render(request, 'fyr/event_detail.html', context)
 
-# def add_event(request):
-#     if request.method == 'post':
-#         form = EventForm(request.POST)
-#         if form.is_valid():
-#             new_event = form.cleaned_data()
-#     return HttpResponse(request, 'fyr/add_event.html')
+def add_event(request):
+    if request.method == 'POST':
+        form = EventForm(request.POST)
+        if form.is_valid():
+            new_event = form.save()
+            return HttpResponseRedirect(reverse('fyr:index'))
+        else:
+            print("Invalid form submission")
+    else:
+        form = EventForm()
+        return render(request, 'fyr/add_event.html', {'form':form})
 
 def address_list(request):
     addresses = Address.objects.order_by('country')
@@ -58,3 +63,20 @@ def add_band(request):
     else:
         band_form = BandForm()
         return render(request, 'fyr/add_band.html', {'band_form':band_form})
+
+def venue_list(request):
+    venues = Venue.objects.all().order_by('address__city')
+    return render(request, 'fyr/venue_list.html', {'venues':venues})
+
+def add_venue(request):
+    if request.method == 'POST':
+        form = VenueForm(request.POST)
+        if form.is_valid():
+            new_venue = form.save()
+            return HttpResponseRedirect(reverse('fyr:venue_list'))
+        else:
+            return render(request, 'fyr/add_venue.html', {'form': form})
+    else:
+        form = VenueForm()
+        return render(request, 'fyr/add_venue.html', {'form': form})
+

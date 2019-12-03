@@ -1,9 +1,9 @@
 from django import forms
-from .models import Events, Address, Band, Venue
+from .models import Event, Address, Band, Venue
 
 class EventForm(forms.ModelForm):
     class Meta:
-        model = Events
+        model = Event
         fields = ['name', 'event_start', 'duration_description']
 
     def __init__(self, *args, **kwargs):
@@ -22,4 +22,10 @@ class AddressForm(forms.ModelForm):
 class BandForm(forms.ModelForm):
     class Meta:
         model = Band
+        fields = '__all__'
+
+
+class VenueForm(forms.ModelForm):
+    class Meta:
+        model = Venue
         fields = '__all__'
