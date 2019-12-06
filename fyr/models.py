@@ -1,7 +1,9 @@
 from django.db import models
 from django.utils import timezone
-
+from django.db.models import Case, CharField, Value, When
 # Create your models here.
+
+
 class Band(models.Model):
     name = models.CharField(max_length=100)
     city = models.CharField(max_length=80)
@@ -58,11 +60,13 @@ class Event(models.Model):
     def __str__(self):
         return self.name
 
-    def label_country_nicknames(self):
-        self.annotate_country = Event.objects.annotate(country_code=Case(
-            When(venue__address__country__in=["South Africa", "SA", "United States"],
-                 then=Value("Saffer")),
-            When(Q(venue__address__country="United States") | Q(venue__address__country="Canada"),
-                 then= Value("Northerica")),
-            default=Value("REST of WORLD"),
-            output_field=CharField(),))
+    #This doesn't work/ do anything. #TODO figure out why
+    # def label_country_nicknames(cls):
+    #     qs = cls.annotate_country = Event.objects.annotate(country_code=Case(
+    #         When(venue__address__country__in=["South Africa", "SA", "United States"],
+    #              then=Value("Saffer")),
+    #         When(Q(venue__address__country="United States") | Q(venue__address__country="Canada"),
+    #              then= Value("Northerica")),
+    #         default=Value("REST of WORLD"),
+    #         output_field=CharField(),))
+    #     return qs

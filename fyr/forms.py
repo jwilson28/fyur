@@ -9,7 +9,7 @@ class EventForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(EventForm, self).__init__(*args, **kwargs)
         self.fields['venue'] = forms.ModelChoiceField(Venue.objects.all())
-        self.fields['bands'] = forms.ModelChoiceField(Band.objects.all())
+        self.fields['bands'] = forms.ModelMultipleChoiceField(Band.objects.all())
 
 
 class AddressForm(forms.ModelForm):
