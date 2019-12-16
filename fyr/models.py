@@ -26,6 +26,7 @@ class Band(models.Model):
 #     real_name = models.CharField(max_length=100)
 #     birthday = models.DateTimeField()
 
+
 class Address(models.Model):
     house_apt_unit_no = models.CharField(max_length=20)
     descriptor = models.CharField(null=True, max_length=100)
@@ -70,3 +71,10 @@ class Event(models.Model):
     #         default=Value("REST of WORLD"),
     #         output_field=CharField(),))
     #     return qs
+
+class BandImage(models.Model):
+    band = models.ForeignKey(Band, default=None, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to = 'images/')
+
+    def __str__(self):
+        return f"{self.band.name}| Image -{str(self.pk)}"

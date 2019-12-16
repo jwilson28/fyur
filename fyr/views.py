@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from .models import Event, Address, Band, Venue
-from .forms import EventForm, AddressForm, BandForm, VenueForm
+from .forms import EventForm, AddressForm, BandForm, VenueForm, CommentForm
 
 
 def index(request):
@@ -11,6 +11,25 @@ def index(request):
         'events':events
     }
     return render(request, 'fyr/index.html', context)
+
+def comment(request):
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        print("is the form bound or not? (before cleaning data) ", form.is_bound)
+        if form.is_valid():
+            print("is the form bound or not? (before cleaning data)", form.is_bound)
+            pseudonym = form.cleaned_data.get("pseudonym")
+            make_public = form.cleaned_data["make_public"]
+            comment = form.cleaned_data["comment"]
+            comment_deets = {}
+            comment_deets["pseudonym"] = pseudonym
+            comment_deets["make_public"] = make_public
+            comment_deets["comment"] = comment
+            return render(request, 'fyr/comment_form.html', {'form':form, 'comment_deets':comment_deets})
+    else:
+        form = CommentForm()
+        print("is the form bound or not? (in the request (before form submission)) ", form.is_bound)
+    return render(request, 'fyr/comment_form.html', {'form':form})
 
 def event_detail(request, event_id):
     event = get_object_or_404(Event, pk=event_id)

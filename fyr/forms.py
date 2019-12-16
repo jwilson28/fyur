@@ -29,3 +29,10 @@ class VenueForm(forms.ModelForm):
     class Meta:
         model = Venue
         fields = '__all__'
+
+class CommentForm(forms.Form):
+    pseudonym = forms.CharField(label='What do you go by? ', max_length=100)
+    #comment = forms.Textarea(label='Add comment here')
+    comment = forms.CharField(label='Type comment', widget=forms.Textarea)
+    make_public = forms.BooleanField(required=False)
+
