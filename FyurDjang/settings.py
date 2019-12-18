@@ -51,22 +51,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'fyr.apps.FyrConfig',
-
-    #WAGTAIL
-    'wagtail.contrib.forms',
-    'wagtail.contrib.redirects',
-    'wagtail.embeds',
-    'wagtail.sites',
-    'wagtail.users',
-    'wagtail.snippets',
-    'wagtail.documents',
-    'wagtail.images',
-    'wagtail.search',
-    'wagtail.admin',
-    'wagtail.core',
-
-    'modelcluster',
-    'taggit',
 ]
 
 MIDDLEWARE = [
@@ -77,10 +61,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
-    #WAGTAIL
-    'wagtail.core.middleware.SiteMiddleware',
-    'wagtail.contrib.redirects.middleware.RedirectMiddleware',
 ]
 
 ROOT_URLCONF = 'FyurDjang.urls'
@@ -157,9 +137,6 @@ PROJECT_PATH = os.path.abspath(os.path.dirname(__name__))
 STATICFILES_DIRS = [
     os.path.join(PROJECT_PATH, 'static')
 ]
-WAGTAIL_SITE_NAME = 'My Fyr Site'
-
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
